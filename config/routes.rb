@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  resources :pages, except: [:show] # default page segment
+  resources :pages
+  #resources :pages, except: [:show] # default page segment
   get 'home/index'
-  get '/pages/:permalink' => "pages#permalink", as: 'permalink'
+  #get '/pages/:permalink' => "pages#permalink", as: 'permalink'
 
   # get 'production_companies/index'
   # get 'production_companies/show'
