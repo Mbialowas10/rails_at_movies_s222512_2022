@@ -1,2 +1,2 @@
 <% content_for(:html_title) {@movie.title }%>
-<%= render @movie %>
+<%= render partial: 'movie', object: @movie, locals: {show_link:false} %>

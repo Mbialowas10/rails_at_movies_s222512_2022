@@ -1,5 +1,5 @@
 <h1>Top 100 Movies</h1>
 <ol class="ml-5">
-  <%=render @movies%>
+  <%= render partial: 'movie', collection: @movies, locals: {show_link:true} %>
   <hr>
 </ol>

@@ -2,6 +2,7 @@ require "csv"
 
 Movie.delete_all
 ProductionCompany.delete_all
+Page.delete_all
 
 # add the file path of the csv file
 filename = Rails.root.join("db/top_movies.csv")
@@ -31,6 +32,15 @@ movies.each do |m|
     puts "invalid production company #{m["production_company"]} for movie #{m['original_title']}."
   end
 end
-
+Page.create(
+  title: 'About the Data',
+  content: 'The data powering this groovy website was provided by Kaggle.',
+  permalink: "about"
+)
+Page.create(
+  title: 'Contact Us',
+  content: 'If you like this groovy website and would like to reach out, please email me at groovy@groovy.com',
+  permalink: "contact"
+)
 puts "Created #{ProductionCompany.count} Production Companies"
 puts "Created #{Movie.count} movies."
