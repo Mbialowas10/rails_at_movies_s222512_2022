@@ -1,8 +1,12 @@
 require "csv"
 
+MovieGenre.delete_all
 Movie.delete_all
 ProductionCompany.delete_all
 Page.delete_all
+
+
+Genre.delete_all
 
 # add the file path of the csv file
 filename = Rails.root.join("db/top_movies.csv")
@@ -26,7 +30,19 @@ movies.each do |m|
       description: m["description"],
       average_vote: m["avg_vote"]
     )
-    puts "Invalid move #{m['original_title']}" unless movie&.valid?
+    unless movie&.valid? # provide some comments on & for O..
+      puts "Invalid move #{m['original_title']}"
+      next
+    end
+
+    # implement manyToMany inserting data into Genre and MovieGenre
+    genres = m["genre"].split(",").map(&:strip) #collection.map { | collection_item | collection_item.strip }
+    genres.each do |genre_name|
+      genre = Genre.find_or_create_by(name: genre_name)
+      #genre = Genre.create(name: genre_name ) breaks the fk contraint because genres is expecting a unique name
+
+      MovieGenre.create(movie: movie, genre: genre)
+    end
   else
 
     puts "invalid production company #{m["production_company"]} for movie #{m['original_title']}."
@@ -44,3 +60,5 @@ Page.create(
 )
 puts "Created #{ProductionCompany.count} Production Companies"
 puts "Created #{Movie.count} movies."
+puts "Created #{Genre.count} genres."
+puts "Created #{MovieGenre.count} genres."
